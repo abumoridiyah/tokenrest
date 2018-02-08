@@ -1,0 +1,176 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.0.45-community-nt
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema websystique
+--
+
+CREATE DATABASE IF NOT EXISTS websystique;
+USE websystique;
+
+--
+-- Definition of table `app_user`
+--
+
+DROP TABLE IF EXISTS `app_user`;
+CREATE TABLE `app_user` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `sso_id` varchar(30) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `first_name` varchar(30) NOT NULL,
+  `last_name` varchar(30) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `sso_id` (`sso_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `app_user`
+--
+
+/*!40000 ALTER TABLE `app_user` DISABLE KEYS */;
+INSERT INTO `app_user` (`id`,`sso_id`,`password`,`first_name`,`last_name`,`email`) VALUES 
+ (1,'sam','$2a$10$dRqtuTYBPctyNjmSzhWLGu6DHlgeIQ2uwqXAau0BkOdbxFyfWFq6C','Sam','Smith','samy@xyz.com'),
+ (3,'jendxor','$2a$10$PZSWkActtBRMF8E6lekRAORP4IdliFKYD/bBOZHgTLB3HCxtNQnUu','Odofin ','Oyejide','jendortimex4real@gmail.com'),
+ (4,'popsol','$2a$10$iSvb4oD0mRUBFC0X69e7XujNSe5KuMdaBHAjstn4Zm2zfCDZt/0xe','Yusuff','Saliu Adediran','me@mymail.com');
+/*!40000 ALTER TABLE `app_user` ENABLE KEYS */;
+
+
+--
+-- Definition of table `app_user_user_profile`
+--
+
+DROP TABLE IF EXISTS `app_user_user_profile`;
+CREATE TABLE `app_user_user_profile` (
+  `user_id` bigint(20) NOT NULL,
+  `user_profile_id` bigint(20) NOT NULL,
+  PRIMARY KEY  (`user_id`,`user_profile_id`),
+  KEY `FK_USER_PROFILE` (`user_profile_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `app_user_user_profile`
+--
+
+/*!40000 ALTER TABLE `app_user_user_profile` DISABLE KEYS */;
+INSERT INTO `app_user_user_profile` (`user_id`,`user_profile_id`) VALUES 
+ (1,2),
+ (3,1),
+ (4,2);
+/*!40000 ALTER TABLE `app_user_user_profile` ENABLE KEYS */;
+
+
+--
+-- Definition of table `employee`
+--
+
+DROP TABLE IF EXISTS `employee`;
+CREATE TABLE `employee` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(50) default NULL,
+  `joiningDate` date default NULL,
+  `SALARY` decimal(10,0) default NULL,
+  `SSN` varchar(40) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `employee`
+--
+
+/*!40000 ALTER TABLE `employee` DISABLE KEYS */;
+/*!40000 ALTER TABLE `employee` ENABLE KEYS */;
+
+
+--
+-- Definition of table `persistent_logins`
+--
+
+DROP TABLE IF EXISTS `persistent_logins`;
+CREATE TABLE `persistent_logins` (
+  `username` varchar(64) NOT NULL,
+  `series` varchar(64) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `last_used` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`series`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `persistent_logins`
+--
+
+/*!40000 ALTER TABLE `persistent_logins` DISABLE KEYS */;
+INSERT INTO `persistent_logins` (`username`,`series`,`token`,`last_used`) VALUES 
+ ('jendxor','XdA9DEP0NRHiiZo7MVtEVg==','SaVJquwpML+5ToUYmhbBAA==','2018-02-07 17:26:30');
+/*!40000 ALTER TABLE `persistent_logins` ENABLE KEYS */;
+
+
+--
+-- Definition of table `registration`
+--
+
+DROP TABLE IF EXISTS `registration`;
+CREATE TABLE `registration` (
+  `ID` int(10) unsigned NOT NULL auto_increment,
+  `name` varchar(45) default NULL,
+  `model` varchar(45) default NULL,
+  PRIMARY KEY  (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `registration`
+--
+
+/*!40000 ALTER TABLE `registration` DISABLE KEYS */;
+INSERT INTO `registration` (`ID`,`name`,`model`) VALUES 
+ (1,'Yusuff Saliu Adediran','2018'),
+ (2,'Abiola Obasanjo','2015');
+/*!40000 ALTER TABLE `registration` ENABLE KEYS */;
+
+
+--
+-- Definition of table `user_profile`
+--
+
+DROP TABLE IF EXISTS `user_profile`;
+CREATE TABLE `user_profile` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `type` varchar(30) NOT NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `type` (`type`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_profile`
+--
+
+/*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
+INSERT INTO `user_profile` (`id`,`type`) VALUES 
+ (1,'USER'),
+ (2,'ADMIN'),
+ (3,'DBA');
+/*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
